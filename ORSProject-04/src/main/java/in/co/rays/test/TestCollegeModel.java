@@ -13,12 +13,12 @@ public class TestCollegeModel {
 
 	public static void main(String[] args) throws Exception {
 
-		 testAdd();
+		 //testAdd();
 		// testUpdate();
 		// testDelete();
 		// testFindByPk();
 		// testFindByName();
-		//testSearch();
+		testSearch();
 
 	}
 
@@ -28,7 +28,9 @@ public class TestCollegeModel {
 
 		CollegeModel model = new CollegeModel();
 
-		List list = model.search(bean);
+		List list = model.search(bean, 1, 5);
+		
+		bean.setName("");
 
 		Iterator it = list.iterator();
 

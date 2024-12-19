@@ -109,10 +109,26 @@ public class SubjectModel {
 		System.out.println("data deleted = " + i);
 	}
 	
-	public List search(SubjectBean bean) throws SQLException {
+	public List search(SubjectBean bean, int pageNo, int pageSize) throws SQLException {
+		
 		Connection conn = JDBCDataSource.getConnection();
+		
+		StringBuffer sql = new StringBuffer("select * from st_subject where 1=1");
+		
+		if (bean != null) {
+			if (bean.getName() != null && bean.getName().length()>0) {
+				sql.append(" and like name '" +bean.getName()+"'");
+				}
+		}
 
-		PreparedStatement pstmt = conn.prepareStatement("select * from st_subject");
+		if (pageSize>0) {
+			pageNo = (pageNo-1)*pageSize;
+			sql.append(" limit " +pageNo+","+pageSize);
+		}
+		
+		System.out.println(" sql = " +sql.toString());
+		
+		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 
 		ResultSet rs = pstmt.executeQuery();
 

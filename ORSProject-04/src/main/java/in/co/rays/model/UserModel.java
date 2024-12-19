@@ -134,11 +134,26 @@ public class UserModel {
 		System.out.println("data Deleted = " + i);
 	}
 
-	public List search(UserBean bean) throws Exception {
+	public List search(UserBean bean, int pageNo, int pageSize) throws Exception {
 
 		Connection conn = JDBCDataSource.getConnection();
 
-		PreparedStatement pstmt = conn.prepareStatement("select * from st_user");
+		StringBuffer sql = new StringBuffer("select * from st_user where 1=1");
+
+		if (bean != null) {
+			if (bean.getFirstName() != null && bean.getFirstName().length() > 0) {
+				sql.append(" and first_name like '" + bean.getFirstName() + "'");
+			}
+
+		}
+		System.out.println(" sql = " + sql.toString());
+		
+		if (pageSize>0) {
+			pageNo=(pageNo-1)*pageSize;
+			sql.append(" limit "+pageNo+","+pageSize);
+		}
+		
+		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 
 		ResultSet rs = pstmt.executeQuery();
 

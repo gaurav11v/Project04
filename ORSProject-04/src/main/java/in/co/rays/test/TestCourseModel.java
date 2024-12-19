@@ -16,8 +16,8 @@ public class TestCourseModel {
 		 //testUpdate();
 		 //testDelete();
 		 //testFindByPk();
-		testFindByName();
-		//testSearch();
+		//testFindByName();
+		testSearch();
 
 	}
 
@@ -81,7 +81,9 @@ public class TestCourseModel {
 
 		CourseModel model = new CourseModel();
 
-		List list = model.search(bean);
+		bean.setName("");
+		
+		List list = model.search(bean, 1, 5);
 
 		Iterator it = list.iterator();
 
@@ -89,13 +91,13 @@ public class TestCourseModel {
 
 			bean = (CourseBean) it.next();
 
-			System.out.println(bean.getId());
-			System.out.println("\t" + bean.getName());
-			System.out.println("\t" + bean.getDuration());
-			System.out.println("\t" + bean.getDescription());
-			System.out.println("\t" + bean.getCreatedBy());
-			System.out.println("\t" + bean.getModifiedBy());
-			System.out.println("\t" + bean.getCreatedDateTime());
+			System.out.print(bean.getId());
+			System.out.print("\t" + bean.getName());
+			System.out.print("\t" + bean.getDuration());
+			System.out.print("\t" + bean.getDescription());
+			System.out.print("\t" + bean.getCreatedBy());
+			System.out.print("\t" + bean.getModifiedBy());
+			System.out.print("\t" + bean.getCreatedDateTime());
 			System.out.println("\t" + bean.getModifiedDateTime());
 
 		}

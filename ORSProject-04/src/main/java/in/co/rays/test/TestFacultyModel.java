@@ -12,11 +12,11 @@ public class TestFacultyModel {
 
 	public static void main(String[] args) throws Exception {
 
-		testAdd();
+		//testAdd();
 		// testUpdate();
 		// testDelete();
 		// testFindByPk();
-		//testSearch();
+		testSearch();
 
 	}
 
@@ -106,8 +106,10 @@ public class TestFacultyModel {
 		FacultyBean bean = new FacultyBean();
 
 		FacultyModel model = new FacultyModel();
+		
+		bean.setFirstName("");
 
-		List list = model.search(bean);
+		List list = model.search(bean, 1, 5);
 
 		Iterator it = list.iterator();
 

@@ -12,19 +12,17 @@ public class TestUserModel {
 
 	public static void main(String[] args) throws Exception {
 
-		testAdd();
+		// testAdd();
 		// testUpdate();
 		// testDelete();
-//		testSearch();
-		//testFindByPk();
-		//testFindByLogin();
-		
-		
+		testSearch();
+		// testFindByPk();
+		// testFindByLogin();
 
 	}
 
 	private static void testFindByLogin() throws Exception {
-		
+
 		UserModel model = new UserModel();
 
 		UserBean bean = model.findByLogin("as@gmail.com");
@@ -47,10 +45,10 @@ public class TestUserModel {
 	}
 
 	private static void testFindByPk() throws Exception {
-		
+
 		UserModel model = new UserModel();
 		UserBean bean = model.findByPk(0);
-		
+
 		if (bean != null) {
 			System.out.print(bean.getId());
 			System.out.print("\t" + bean.getFirstName());
@@ -65,16 +63,17 @@ public class TestUserModel {
 			System.out.print("\t" + bean.getModifiedBy());
 			System.out.print("\t" + bean.getCreatedDateTime());
 			System.out.println("\t" + bean.getModifiedDateTime());
-		} 
-		
+		}
+
 	}
 
 	private static void testSearch() throws Exception {
 
 		UserModel model = new UserModel();
 		UserBean bean = new UserBean();
-
-		List list = model.search(bean);
+		bean.setFirstName("");
+		
+		List list = model.search(bean,1,5);
 
 		Iterator it = list.iterator();
 
@@ -93,7 +92,7 @@ public class TestUserModel {
 			System.out.print("\t" + bean.getCreatedBy());
 			System.out.print("\t" + bean.getModifiedBy());
 			System.out.print("\t" + bean.getCreatedDateTime());
-			System.out.print("\t" + bean.getModifiedDateTime());
+			System.out.println("\t" + bean.getModifiedDateTime());
 		}
 	}
 

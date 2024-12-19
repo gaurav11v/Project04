@@ -14,11 +14,9 @@ public class TestStudentModel {
 		// testAdd();
 		// testUpdate();
 		// testDelete();
-		//testSearch();
-		//testFindByPk();
-		testFindByEmail();
-		
-		
+		 testSearch();
+		// testFindByPk();
+		//testFindByEmail();
 
 	}
 
@@ -42,7 +40,7 @@ public class TestStudentModel {
 			System.out.print("\t" + bean.getCreatedDateTime());
 			System.out.println("\t" + bean.getModifiedDateTime());
 		}
-		
+
 	}
 
 	private static void testFindByPk() throws Exception {
@@ -65,20 +63,22 @@ public class TestStudentModel {
 			System.out.print("\t" + bean.getCreatedDateTime());
 			System.out.println("\t" + bean.getModifiedDateTime());
 		}
-		
+
 	}
 
 	private static void testSearch() throws Exception {
 
 		StudentBean bean = new StudentBean();
 		StudentModel model = new StudentModel();
+		bean.setFirstName("");
 
-		List list = model.search(bean);
+		List list = model.search(bean, 1, 10);
 
 		Iterator it = list.iterator();
 
 		while (it.hasNext()) {
 			bean = (StudentBean) it.next();
+			
 			System.out.print(bean.getId());
 			System.out.print("\t" + bean.getFirstName());
 			System.out.print("\t" + bean.getLastName());
@@ -128,7 +128,7 @@ public class TestStudentModel {
 		StudentBean bean = new StudentBean();
 		StudentModel model = new StudentModel();
 
-		//bean.setId(1);
+		// bean.setId(1);
 		bean.setFirstName("Gaurav");
 		bean.setLastName("Verma");
 		bean.setDob(new Date());

@@ -99,8 +99,10 @@ public class TestTimetableModel {
 		// bean.setSemester("1");
 
 		TimetableModel model = new TimetableModel();
+		
+		bean.setSemester("");
 
-		List list = model.search(bean);
+		List list = model.search(bean, 1, 5);
 
 		Iterator it = list.iterator();
 

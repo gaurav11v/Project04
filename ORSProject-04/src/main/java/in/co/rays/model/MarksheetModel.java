@@ -170,10 +170,24 @@ public class MarksheetModel {
 		return bean;
 	}
 	
-	public List search(MarksheetBean bean) throws Exception {
+	public List search(MarksheetBean bean, int pageNo, int pageSize) throws Exception {
 
 		Connection conn = JDBCDataSource.getConnection();
-		PreparedStatement pstmt = conn.prepareStatement("select * from st_marksheet");
+		
+		StringBuffer sql = new StringBuffer("select * from st_marksheet where 1=1");
+		
+		if (bean != null) {
+			if (bean.getRollNo() != null && bean.getRollNo().length()>0) {
+				sql.append(" and roll_no like = '" +bean.getRollNo()+"'");
+			}
+		}
+		
+		if (pageSize>0) {
+			pageNo = (pageNo-1)*pageSize;
+			sql.append(" limit " +pageNo+ "," +pageSize);
+		}
+		
+		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 
 		ResultSet rs = pstmt.executeQuery();
 

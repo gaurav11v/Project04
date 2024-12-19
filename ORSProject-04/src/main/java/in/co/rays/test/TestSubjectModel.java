@@ -1,6 +1,5 @@
 package in.co.rays.test;
 
-
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -13,23 +12,21 @@ import in.co.rays.model.SubjectModel;
 public class TestSubjectModel {
 
 	public static void main(String[] args) throws Exception {
-		
-		
-		//testAdd();
-        //testUpdate();
-		//testDelete();
-		//testSearch();
-		//testFindByPk();
-		testFindByName();
-		
-		
+
+		// testAdd();
+		// testUpdate();
+		// testDelete();
+		testSearch();
+		// testFindByPk();
+		// testFindByName();
+
 	}
 
 	private static void testAdd() throws Exception {
-		
+
 		SubjectBean bean = new SubjectBean();
 		SubjectModel model = new SubjectModel();
-	
+
 		bean.setName("Mechanical");
 		bean.setCourseId(1);
 		bean.setDescription("Mechanical engineering");
@@ -37,16 +34,16 @@ public class TestSubjectModel {
 		bean.setModifiedBy("admin@gmail.com");
 		bean.setCreatedDateTime(new Timestamp(new Date().getTime()));
 		bean.setModifiedDateTime(new Timestamp(new Date().getTime()));
-		
+
 		model.add(bean);
-	
+
 	}
 
 	private static void testUpdate() throws Exception {
-		
+
 		SubjectBean bean = new SubjectBean();
 		SubjectModel model = new SubjectModel();
-		
+
 		bean.setId(1);
 		bean.setName("Electrical");
 		bean.setCourseId(1);
@@ -55,13 +52,12 @@ public class TestSubjectModel {
 		bean.setModifiedBy("admin@gmail.com");
 		bean.setCreatedDateTime(new Timestamp(new Date().getTime()));
 		bean.setModifiedDateTime(new Timestamp(new Date().getTime()));
-		
+
 		model.update(bean);
-	
+
 	}
 
 	private static void testDelete() throws Exception {
-		
 
 		SubjectModel model = new SubjectModel();
 		model.delete(1);
@@ -70,11 +66,12 @@ public class TestSubjectModel {
 
 	private static void testSearch() throws Exception {
 		SubjectBean bean = new SubjectBean();
-		
 
 		SubjectModel model = new SubjectModel();
-
-		List list = model.search(bean);
+		
+		bean.setName("");
+		
+		List list = model.search(bean, 1, 5);
 
 		Iterator it = list.iterator();
 
@@ -90,11 +87,11 @@ public class TestSubjectModel {
 			System.out.print("\t" + bean.getCreatedDateTime());
 			System.out.println("\t" + bean.getModifiedDateTime());
 		}
-		
+
 	}
 
 	private static void testFindByPk() throws Exception {
-		
+
 		SubjectModel model = new SubjectModel();
 
 		SubjectBean bean = model.findByPk(1);
@@ -112,7 +109,7 @@ public class TestSubjectModel {
 		} else {
 			System.out.println("id not found");
 		}
-		
+
 	}
 
 	private static void testFindByName() throws Exception {
@@ -121,7 +118,7 @@ public class TestSubjectModel {
 		SubjectBean bean = model.findByName("mechanical");
 
 		if (bean != null) {
-			
+
 			System.out.print(bean.getId());
 			System.out.print("\t" + bean.getName());
 			System.out.print("\t" + bean.getCourseId());
@@ -134,7 +131,7 @@ public class TestSubjectModel {
 		} else {
 			System.out.println("subject name not found");
 		}
-		
+
 	}
 
 }

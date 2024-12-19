@@ -25,11 +25,11 @@ public class CollegeModel {
 	}
 
 	public void add(CollegeBean bean) throws Exception {
-		
+
 		CollegeBean existbean = findByName(bean.getName());
-		
+
 		if (existbean != null) {
-			
+
 			throw new Exception("College already exist");
 		}
 
@@ -58,11 +58,11 @@ public class CollegeModel {
 	}
 
 	public void update(CollegeBean bean) throws Exception {
-		
+
 		CollegeBean existbean = findByName(bean.getName());
-		
+
 		if (existbean != null && bean.getName() != existbean.getName()) {
-			
+
 			throw new Exception("College cant be updated");
 		}
 
@@ -104,11 +104,25 @@ public class CollegeModel {
 
 	}
 
-	public List search(CollegeBean bean) throws Exception {
+	public List search(CollegeBean bean, int pageNo, int pageSize) throws Exception {
 
 		Connection conn = JDBCDataSource.getConnection();
 
-		PreparedStatement pstmt = conn.prepareStatement("select * from st_college");
+		StringBuffer sql = new StringBuffer("select * from st_college where 1=1");
+
+		if (bean != null) {
+			if (bean.getName() != null && bean.getName().length() > 0) {
+				sql.append(" and name like '" + bean.getName() + "'");
+			}
+		}
+		if (pageSize > 0) {
+			pageNo = (pageNo - 1) * pageSize;
+			sql.append(" limit " + pageNo + "," + pageSize);
+		}
+
+		System.out.println(" sql = " + sql.toString());
+
+		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 
 		ResultSet rs = pstmt.executeQuery();
 
@@ -161,6 +175,7 @@ public class CollegeModel {
 		return bean;
 
 	}
+
 	public CollegeBean findByName(String name) throws Exception {
 
 		Connection conn = JDBCDataSource.getConnection();
@@ -188,5 +203,5 @@ public class CollegeModel {
 		}
 		JDBCDataSource.closeConnection(conn);
 		return bean;
-}
+	}
 }

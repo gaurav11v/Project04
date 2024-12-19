@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.co.rays.bean.DropdownListBean;
 import in.co.rays.bean.RoleBean;
 import in.co.rays.util.JDBCDataSource;
 
@@ -35,7 +36,7 @@ public class RoleModel {
 			throw new Exception("name already exist");
 
 		}
-		
+
 		int pk = nextPk();
 
 		Connection conn = JDBCDataSource.getConnection();
@@ -103,11 +104,31 @@ public class RoleModel {
 
 	}
 
-	public List search(RoleBean bean) throws Exception {
+	public List list() throws Exception {
+		return search(null, 0, 0);
+	}
+
+	public List search(RoleBean bean, int pageNo, int pageSize) throws Exception {
 
 		Connection conn = JDBCDataSource.getConnection();
 
-		PreparedStatement pstmt = conn.prepareStatement("select * from st_role");
+		StringBuffer sql = new StringBuffer("select * from st_role where 1=1");
+
+		if (bean != null) {
+
+			if (bean.getName() != null && bean.getName().length() > 0) {
+				sql.append(" and name like '" + bean.getName() + "'");
+
+			}
+		}
+		if (pageSize > 0) {
+			pageNo = (pageNo - 1) * pageSize;
+			sql.append(" limit " + pageNo + "," + pageSize);
+		}
+
+		System.out.println("sql = " + sql.toString());
+
+		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 
 		ResultSet rs = pstmt.executeQuery();
 
@@ -187,4 +208,5 @@ public class RoleModel {
 		return bean;
 
 	}
+
 }

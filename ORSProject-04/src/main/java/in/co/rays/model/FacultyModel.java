@@ -159,7 +159,7 @@ public class FacultyModel {
 		FacultyBean bean = null;
 
 		while (rs.next()) {
-			
+
 			bean = new FacultyBean();
 			bean.setId(rs.getLong(1));
 			bean.setFirstName(rs.getString(2));
@@ -182,6 +182,7 @@ public class FacultyModel {
 		JDBCDataSource.closeConnection(conn);
 		return bean;
 	}
+
 	public FacultyBean findByEmail(String email) throws Exception {
 
 		Connection conn = JDBCDataSource.getConnection();
@@ -216,12 +217,27 @@ public class FacultyModel {
 		}
 		JDBCDataSource.closeConnection(conn);
 		return bean;
-}
-	public List search(FacultyBean bean) throws Exception {
+	}
+
+	public List search(FacultyBean bean, int pageNo, int pageSize) throws Exception {
 
 		Connection conn = JDBCDataSource.getConnection();
 
-		PreparedStatement pstmt = conn.prepareStatement("select * from st_faculty");
+		StringBuffer sql = new StringBuffer("select * from st_faculty where 1=1");
+
+		if (bean != null) {
+			if (bean.getFirstName() != null && bean.getFirstName().length() > 0) {
+				sql.append(" and first_name like '" + bean.getFirstName() + "'");
+			}
+		}
+		if (pageSize > 0) {
+			pageNo = (pageNo - 1) * pageSize;
+			sql.append(" limit " + pageNo + "," + pageSize);
+		}
+
+		System.out.println(" sql = " + sql.toString());
+
+		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 
 		ResultSet rs = pstmt.executeQuery();
 
@@ -250,6 +266,6 @@ public class FacultyModel {
 		}
 		JDBCDataSource.closeConnection(conn);
 		return list;
-	
+
 	}
 }

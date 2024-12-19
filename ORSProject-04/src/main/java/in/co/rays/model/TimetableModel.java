@@ -149,10 +149,23 @@ public class TimetableModel {
 		return bean;
 	}
 
-	public List search(TimetableBean bean) throws Exception {
+	public List search(TimetableBean bean, int pageNo, int pageSize ) throws Exception {
 
 		Connection conn = JDBCDataSource.getConnection();
-		PreparedStatement pstmt = conn.prepareStatement("select * from st_timetable");
+		
+		StringBuffer sql = new StringBuffer("select * from st_timetable where 1=1");
+		
+		if (bean != null) {
+			if (bean.getSemester() != null && bean.getSemester().length()>0) {
+				sql.append(" and semester like '" +bean.getSemester()+ "%'");
+			}
+		}
+		if (pageSize > 0) {
+			pageNo = (pageNo - 1)*pageSize;
+			sql.append(" limit " +pageNo+","+pageSize);
+		}
+		
+		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 
 		ResultSet rs = pstmt.executeQuery();
 
