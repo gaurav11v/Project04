@@ -103,6 +103,9 @@ public class CollegeModel {
 		System.out.println("Data deleted = " + i);
 
 	}
+	public List list() throws Exception {
+		return search(null, 0, 0);
+	}
 
 	public List search(CollegeBean bean, int pageNo, int pageSize) throws Exception {
 

@@ -208,6 +208,8 @@ public class SubjectModel {
 		JDBCDataSource.closeConnection(conn);
 		return bean;
 }
-	
+	public List list() throws Exception {
+		return search(null, 0, 0);
+	}
 }
 

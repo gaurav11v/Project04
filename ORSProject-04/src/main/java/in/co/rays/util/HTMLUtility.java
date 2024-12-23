@@ -6,6 +6,7 @@ import java.util.Set;
 
 import in.co.rays.bean.BaseBean;
 import in.co.rays.bean.DropdownListBean;
+import in.co.rays.model.FacultyModel;
 import in.co.rays.model.RoleModel;
 
 public class HTMLUtility {
@@ -79,7 +80,9 @@ public class HTMLUtility {
 
 	public static void testGetListByList() throws Exception {
 
-		RoleModel model = new RoleModel();
+		//RoleModel model = new RoleModel();
+		
+		FacultyModel model = new FacultyModel();
 
 		List<DropdownListBean> list = model.list();
 
