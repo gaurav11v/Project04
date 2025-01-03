@@ -105,6 +105,7 @@ public class RoleModel {
 	}
 
 	public List list() throws Exception {
+		System.out.println("in list method>>>>>>>>>>>>>>>");
 		return search(null, 0, 0);
 	}
 

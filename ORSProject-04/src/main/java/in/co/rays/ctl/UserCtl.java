@@ -1,6 +1,7 @@
 package in.co.rays.ctl;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,17 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 import in.co.rays.bean.BaseBean;
 import in.co.rays.bean.RoleBean;
 import in.co.rays.bean.UserBean;
+import in.co.rays.exception.ApplicationException;
+import in.co.rays.exception.DublicateRecordException;
+import in.co.rays.model.RoleModel;
 import in.co.rays.model.UserModel;
 import in.co.rays.util.DataUtility;
 import in.co.rays.util.DataValidator;
 import in.co.rays.util.PropertyReader;
 import in.co.rays.util.ServletUtility;
 
-@WebServlet("/UserRegistrationCtl")
-public class UserRegistrationCtl extends BaseCtl {
-
-	public static final String OP_SIGN_UP = "Sign Up";
-	public static final String OP_RESET = "Reset";
+@WebServlet("/UserCtl")
+public class UserCtl extends BaseCtl {
 
 	@Override
 	protected boolean validate(HttpServletRequest request) {
@@ -112,25 +113,37 @@ public class UserRegistrationCtl extends BaseCtl {
 	}
 
 	@Override
-	protected BaseBean populateBean(HttpServletRequest request) {
-		UserBean bean = new UserBean();
-		bean.setId(DataUtility.getLong(request.getParameter("id")));
-		bean.setFirstName(DataUtility.getString(request.getParameter("firstName")));
-		bean.setLastName(DataUtility.getString(request.getParameter("lastName")));
-		bean.setLogin(DataUtility.getString(request.getParameter("login")));
-		bean.setPassword(DataUtility.getString(request.getParameter("password")));
-		bean.setconfirmPassword(DataUtility.getString(request.getParameter("confirmPassword")));
-		bean.setGender(DataUtility.getString(request.getParameter("gender")));
-		bean.setDob(DataUtility.getDate(request.getParameter("dob")));
-		bean.setMobileNo(DataUtility.getString(request.getParameter("mobileNo")));
-		bean.setRoleId(RoleBean.STUDENT);
-		populateDTO(bean, request);
-		return bean;
+	protected void preload(HttpServletRequest request) {
+		RoleModel roleModel = new RoleModel();
+		try {
+			List roleList = roleModel.list();
+			request.setAttribute("roleList", roleList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		String op = DataUtility.getString(request.getParameter("operation"));
+		Long id = DataUtility.getLong(request.getParameter("id"));
+
+		if (id > 0) {
+
+			UserModel model = new UserModel();
+
+			try {
+				UserBean bean = model.findByPk(id);
+				ServletUtility.setBean(bean, request);
+			} catch (ApplicationException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		ServletUtility.forward(getView(), request, response);
 	}
 
@@ -144,20 +157,47 @@ public class UserRegistrationCtl extends BaseCtl {
 
 		UserModel model = new UserModel();
 
-		if (op.equalsIgnoreCase(OP_SIGN_UP)) {
+		if (OP_SAVE.equalsIgnoreCase(op)) {
 			try {
 				model.add(bean);
-			} catch (Exception e) {
+				ServletUtility.setSuccessMessage("User Added Successfully..!!", request);
+				ServletUtility.forward(getView(), request, response);
+			} catch (DublicateRecordException e) {
+				ServletUtility.setBean(bean, request);
+				ServletUtility.setErrorMessage("login id already exist", request);
+				ServletUtility.forward(getView(), request, response);
+			} catch (ApplicationException e) {
 				e.printStackTrace();
 			}
-			ServletUtility.forward(getView(), request, response);
-		} else if (op.equalsIgnoreCase(OP_RESET)) {
-			ServletUtility.redirect(ORSView.USER_REGISTRATION_CTL, request, response);
+		} else if (OP_RESET.equalsIgnoreCase(op)) {
+			ServletUtility.redirect(ORSView.USER_CTL, request, response);
+			return;
 		}
 	}
 
 	@Override
-	protected String getView() {
-		return ORSView.USER_REGISTRATION_VIEW;
+	protected BaseBean populateBean(HttpServletRequest request) {
+
+		UserBean bean = new UserBean();
+
+		bean.setId(DataUtility.getLong(request.getParameter("id")));
+		bean.setFirstName(DataUtility.getString(request.getParameter("firstName")));
+		bean.setLastName(DataUtility.getString(request.getParameter("lastName")));
+		bean.setLogin(DataUtility.getString(request.getParameter("login")));
+		bean.setPassword(DataUtility.getString(request.getParameter("password")));
+		bean.setconfirmPassword(DataUtility.getString(request.getParameter("confirmPassword")));
+		bean.setGender(DataUtility.getString(request.getParameter("gender")));
+		bean.setRoleId(DataUtility.getLong(request.getParameter("roleId")));
+		bean.setDob(DataUtility.getDate(request.getParameter("dob")));
+		bean.setMobileNo(DataUtility.getString(request.getParameter("mobileNo")));
+
+		populateDTO(bean, request);
+		return bean;
 	}
+
+	@Override
+	protected String getView() {
+		return ORSView.USER_VIEW;
+	}
+
 }

@@ -8,7 +8,7 @@ public class UserBean extends BaseBean {
 	private String lastName;
 	private String login;
 	private String password;
-	private String confirmedPassword;
+	private String confirmPassword;
 	private Date dob;
 	private String mobileNo;
 	private long roleId;
@@ -46,12 +46,12 @@ public class UserBean extends BaseBean {
 		this.password = password;
 	}
 
-	public String getConfirmedPassword() {
-		return confirmedPassword;
+	public String getconfirmPassword() {
+		return confirmPassword;
 	}
 
-	public void setConfirmedPassword(String confirmedPassword) {
-		this.confirmedPassword = confirmedPassword;
+	public void setconfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
 
 	public Date getDob() {
@@ -95,7 +95,7 @@ public class UserBean extends BaseBean {
 	@Override
 	public String getValue() {
 		// TODO Auto-generated method stub
-		return firstName + lastName;
+		return firstName +" "+lastName;
 	}
 
 }

@@ -15,12 +15,44 @@ public class TestUserModel {
 		// testAdd();
 		// testUpdate();
 		// testDelete();
-		testSearch();
+//		testSearch();
 		// testFindByPk();
 		// testFindByLogin();
+		testAuthenticate();
 
 	}
 
+	private static void testAuthenticate() throws Exception {
+
+		String login = "meenabhardwaj@gmail.com";
+		String password = "password123";
+
+		UserModel model = new UserModel();
+
+		UserBean bean = model.Authenticate(login, password);
+
+		if (bean != null) {
+
+			System.out.println(bean.getId());
+			System.out.println("\t" + bean.getFirstName());
+			System.out.println("\t" + bean.getLastName());
+			System.out.println("\t" + bean.getLogin());
+			System.out.println("\t" + bean.getPassword());
+			System.out.println("\t" + bean.getDob());
+			System.out.println("\t" + bean.getMobileNo());
+			System.out.println("\t" + bean.getRoleId());
+			System.out.println("\t" + bean.getGender());
+			System.out.println("\t" + bean.getCreatedBy());
+			System.out.println("\t" + bean.getModifiedBy());
+			System.out.println("\t" + bean.getCreatedDateTime());
+			System.out.println("\t" + bean.getModifiedDateTime());
+
+		} else {
+
+			System.out.println("user not available");
+
+		}
+	}
 	private static void testFindByLogin() throws Exception {
 
 		UserModel model = new UserModel();

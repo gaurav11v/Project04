@@ -145,6 +145,9 @@ public class UserModel {
 			if (bean.getFirstName() != null && bean.getFirstName().length() > 0) {
 				sql.append(" and first_name like '" + bean.getFirstName() + "'");
 			}
+			if (bean.getRoleId()>0) {
+				sql.append(" and role_id like " + bean.getRoleId());
+			}
 
 		}
 		System.out.println(" sql = " + sql.toString());
@@ -181,6 +184,7 @@ public class UserModel {
 			list.add(bean);
 
 		}
+		JDBCDataSource.closeConnection(conn);
 		return list;
 	}
 
@@ -262,7 +266,7 @@ public class UserModel {
 
 		conn = JDBCDataSource.getConnection();
 
-		PreparedStatement pstmt = conn.prepareStatement("select from st_user where login = ? and password = ?");
+		PreparedStatement pstmt = conn.prepareStatement("select * from st_user where login = ? and password = ?");
 
 		pstmt.setString(1, login);
 		pstmt.setString(2, password);
@@ -288,5 +292,8 @@ public class UserModel {
 		JDBCDataSource.closeConnection(conn);
 		return bean;
 
+	}
+	public List list() throws Exception {
+		return search(null, 0, 0);
 	}
 }

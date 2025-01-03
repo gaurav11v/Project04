@@ -6,8 +6,8 @@ import java.util.Set;
 
 import in.co.rays.bean.BaseBean;
 import in.co.rays.bean.DropdownListBean;
-import in.co.rays.model.FacultyModel;
 import in.co.rays.model.RoleModel;
+import in.co.rays.model.UserModel;
 
 public class HTMLUtility {
 
@@ -72,7 +72,8 @@ public class HTMLUtility {
 		map.put("male", "male");
 		map.put("female", "female");
 
-		String selectedValue = "male";
+		String selectedValue = null;
+		selectedValue = "male";
 		String htmlSelectFromMap = HTMLUtility.getList("gender", selectedValue, map);
 
 		System.out.println(htmlSelectFromMap);
@@ -82,13 +83,13 @@ public class HTMLUtility {
 
 		//RoleModel model = new RoleModel();
 		
-		FacultyModel model = new FacultyModel();
+		UserModel model = new UserModel();
 
 		List<DropdownListBean> list = model.list();
 
 		String selectedValue = null;
 
-		String htmlSelectFromList = HTMLUtility.getList("fname", selectedValue, list);
+		String htmlSelectFromList = HTMLUtility.getList("name", selectedValue, list);
 
 		System.out.println(htmlSelectFromList);
 	}
