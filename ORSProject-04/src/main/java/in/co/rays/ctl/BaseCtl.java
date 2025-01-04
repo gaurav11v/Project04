@@ -83,6 +83,7 @@ public abstract class BaseCtl extends HttpServlet {
 
 		System.out.println("service");
 		String op = DataUtility.getString(request.getParameter("operation"));
+		System.out.println("op =" +op);
 
 		if (DataValidator.isNotNull(op) && !OP_CANCEL.equalsIgnoreCase(op) && !OP_VIEW.equalsIgnoreCase(op)
 				&& !OP_DELETE.equalsIgnoreCase(op) && !OP_RESET.equalsIgnoreCase(op)) {

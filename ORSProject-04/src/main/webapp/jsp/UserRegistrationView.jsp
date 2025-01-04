@@ -72,7 +72,7 @@
 				</tr>
 				<tr>
 					<th align="left">DOB<span style="color: red">*</span></th>
-					<td><input type="date" name="dob"
+					<td><input type="text" id="udate" name="dob"
 						placeholder="Select Date of Birth"
 						value="<%=DataUtility.getDateString(bean.getDob())%>"
 						style="width: 97%" /></td>

@@ -20,7 +20,7 @@ import in.co.rays.util.DataValidator;
 import in.co.rays.util.PropertyReader;
 import in.co.rays.util.ServletUtility;
 
-@WebServlet("/UserCtl")
+@WebServlet(name = "UserCtl", urlPatterns = { "/ctl/UserCtl" })
 public class UserCtl extends BaseCtl {
 
 	@Override
@@ -169,6 +169,22 @@ public class UserCtl extends BaseCtl {
 			} catch (ApplicationException e) {
 				e.printStackTrace();
 			}
+		} else if (OP_UPDATE.equalsIgnoreCase(op)) {
+			try {
+				System.out.println("In update");
+				model.update(bean);
+				ServletUtility.setBean(bean, request);
+				ServletUtility.setSuccessMessage("User Updated Successfully", request);
+				ServletUtility.forward(getView(), request, response);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		} else if (OP_CANCEL.equalsIgnoreCase(op)) {
+			ServletUtility.redirect(ORSView.USER_LIST_CTL, request, response);
+			return;
+
 		} else if (OP_RESET.equalsIgnoreCase(op)) {
 			ServletUtility.redirect(ORSView.USER_CTL, request, response);
 			return;

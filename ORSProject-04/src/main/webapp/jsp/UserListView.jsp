@@ -53,10 +53,10 @@
 				<tr>
 					<td align="center"><label><b>First Name :</b></label> <input
 						type="text" name="firstName"
-						value="<%=ServletUtility.getParameter("firstName", request)%>">;
+						value="<%=ServletUtility.getParameter("firstName", request)%>">
 						<label><b>Role :</b></label> <%=HTMLUtility.getList("roleId", DataUtility.getStringData(bean.getRoleId()), roleList)%>&nbsp;
 						<input type="submit" name="operation"
-						value="<%=UserListCtl.OP_SEARCH%>">; <input type="submit"
+						value="<%=UserListCtl.OP_SEARCH%>"> <input type="submit"
 						name="operation" value="<%=UserListCtl.OP_RESET%>"></td>
 				</tr>
 			</table>
@@ -65,6 +65,7 @@
 
 			<table border="1%" style="width: 100%">
 				<tr style="background-color: lavender; color: black;">
+
 					<th><input type="checkbox" id="selectall"></th>
 					<th>S.No.</th>
 					<th>FirstName</th>
