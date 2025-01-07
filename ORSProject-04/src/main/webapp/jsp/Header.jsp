@@ -16,6 +16,7 @@
 	href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <script src="/ORSProject-04/js/checkbox.js"></script>
 <script src="/ORSProject-04/js/datepicker.js"></script>
+<script src="/ORSProject-04/js/dateppicker.js"></script>
 </head>
 <body>
 	<%
@@ -63,7 +64,12 @@
 			<a href="<%=ORSView.COURSE_CTL%>">Add Course</a> |
 			<a href="<%=ORSView.COURSE_LIST_CTL%>">Course List</a> |
 			<a href="<%=ORSView.SUBJECT_CTL%>">Add Subject</a> |
-			<a href="<%=ORSView.SUBJECT_LIST_CTL %>>">Subject List</a> |
+			<a href="<%=ORSView.SUBJECT_LIST_CTL %>>">Subject List</a> | <br>
+			<a href="<%=ORSView.MARKSHEET_CTL%>">Add Marksheet</a> |
+			<a href="<%=ORSView.MARKSHEET_LIST_CTL%>>">Marksheet List</a> | <br>
+			
+			<a href="<%=ORSView.PURCHASE_CTL%>">Add Stock Purchase</a> |
+			<a href="<%=ORSView.PURCHASE_LIST_CTL%>">Purchase List</a>
 		</td>
 		</tr>
 		<%

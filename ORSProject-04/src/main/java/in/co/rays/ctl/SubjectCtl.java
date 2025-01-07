@@ -14,6 +14,8 @@ import in.co.rays.exception.DublicateRecordException;
 import in.co.rays.model.CourseModel;
 import in.co.rays.model.SubjectModel;
 import in.co.rays.util.DataUtility;
+import in.co.rays.util.DataValidator;
+import in.co.rays.util.PropertyReader;
 import in.co.rays.util.ServletUtility;
 
 @WebServlet(name = "SubjectCtl", urlPatterns = { "/ctl/SubjectCtl" })
@@ -22,6 +24,28 @@ public class SubjectCtl extends BaseCtl {
 	@Override
 	protected boolean validate(HttpServletRequest request) {
 		boolean isValid = true;
+		
+		if (DataValidator.isNull(request.getParameter("name"))) {
+			request.setAttribute("name", PropertyReader.getValue("error.require", "Name"));
+			isValid = false;
+		} else if (!DataValidator.isName(request.getParameter("name"))) {
+			request.setAttribute("name", "Role Name contains alphabet only");
+			isValid = false;
+		}
+		
+		if (DataValidator.isNull(request.getParameter("courseName"))) {
+			request.setAttribute("courseName", PropertyReader.getValue("error.require", "Course Name"));
+			isValid = false;
+		}
+		
+		String description = request.getParameter("description");
+		if (DataValidator.isNull(description)) {
+			request.setAttribute("description", PropertyReader.getValue("error.require", "Description"));
+			isValid = false;
+		} else if (!DataValidator.isName(description)) {
+			request.setAttribute("description", "invalid description");
+			isValid = false;
+		}
 
 		return isValid;
 	}

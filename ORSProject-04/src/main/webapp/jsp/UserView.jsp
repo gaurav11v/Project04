@@ -79,6 +79,7 @@
 						value="<%=DataUtility.getStringData(bean.getLastName())%>" /></td>
 					<td style="position: fixed;"><font color="red"><%=ServletUtility.getErrorMessage("lastName", request)%></font></td>
 
+
 				</tr>
 				<tr>
 					<th align="left">Login Id<span style="color: red">*</span></th>
