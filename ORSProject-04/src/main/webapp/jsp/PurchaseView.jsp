@@ -5,7 +5,7 @@
 <%@page import="in.co.rays.util.DataUtility"%>
 <%@page import="in.co.rays.util.ServletUtility"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,20 +13,35 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%@ include file="Header.jsp" %>
+	<%@ include file="Header.jsp"%>
 
-<%
+	<%
 		List purchaseList = (List) request.getAttribute("purchaseList");
 	%>
 
-<form action="<%=ORSView.PURCHASE_CTL%>" method="post">
+	<form action="<%=ORSView.PURCHASE_CTL%>" method="post">
 
-<jsp:useBean id="bean" class="in.co.rays.bean.PurchaseBean"
+		<jsp:useBean id="bean" class="in.co.rays.bean.PurchaseBean"
 			scope="request" />
-<div align="center">
-<h1>Add Stock Purchase </h1>
+		<div align="center">
 
-<!-- Success and Error Messages -->
+			<%
+				if (bean != null && bean.getId() > 0) {
+			%>
+			<h1 align="center">Update Stock Purchase</h1>
+			<%
+				} else {
+			%>
+
+
+			<h1 align="center">
+				<font color="navy">Add Stock Purchase</font>
+			</h1>
+
+			<%
+				}
+			%>
+			<!-- Success and Error Messages -->
 			<h3>
 				<font color="green"><%=ServletUtility.getSuccessMessage(request)%></font>
 			</h3>
@@ -43,30 +58,28 @@
 				value="<%=DataUtility.getTimestamp(bean.getCreatedDateTime())%>" />
 			<input type="hidden" name="modifiedDatetime"
 				value="<%=DataUtility.getTimestamp(bean.getModifiedDateTime())%>" />
-				
-				<table>
-				
+
+			<table>
+
 				<tr>
-					<th align="left"> Quantity<span style="color: red">*</span></th>
+					<th align="left">Quantity<span style="color: red">*</span></th>
 					<td><input type="text" name="quantity"
 						placeholder="Enter Quantity"
 						value="<%=(DataUtility.getStringData(bean.getQuantity()).equals("0") ? ""
-								: DataUtility.getStringData(bean.getQuantity()))%>" /></td>
+					: DataUtility.getStringData(bean.getQuantity()))%>" /></td>
 					<td style="position: fixed;"><font color="red"><%=ServletUtility.getErrorMessage("quantity", request)%></font></td>
 
 				</tr>
 				<tr>
 					<th align="left">Price<span style="color: red">*</span></th>
 					<td><input type="text" name="price"
-						
 						value="<%=(DataUtility.getStringData(bean.getPrice()).equals("0") ? ""
-								: DataUtility.getStringData(bean.getPrice()))%>" /></td>
+					: DataUtility.getStringData(bean.getPrice()))%>" /></td>
 					<td style="position: fixed;"><font color="red"><%=ServletUtility.getErrorMessage("price", request)%></font></td>
-				
 				<tr>
 					<th align="left">Purchase Date<span style="color: red">*</span></th>
-					<td><input style="width: 98%" type="text" id="udate" name="purchaseDate"
-						placeholder="Select purchase date"
+					<td><input style="width: 98%" type="text" id="idate"
+						name="purchasedate" placeholder="Select purchase date"
 						value="<%=DataUtility.getDateString(bean.getPurchaseDate())%>" /></td>
 					<td style="position: fixed;"><font color="red"><%=ServletUtility.getErrorMessage("purchasedate", request)%></font></td>
 
@@ -75,33 +88,45 @@
 					<th align="left">Order type<span style="color: red">*</span></th>
 					<td>
 						<%
-							HashMap<String, String> genderMap = new HashMap<>();
-							genderMap.put("hp", "Hp");
-							genderMap.put("lenovo", "Lenovo");
-							genderMap.put("dell", "Dell");
-							genderMap.put("asus", "Asus");
-						%> <%=HTMLUtility.getList("order_type", bean.getOrderType(), genderMap)%>
+							HashMap<String, String> brandMap = new HashMap<>();
+							brandMap.put("hp", "Hp");
+							brandMap.put("lenovo", "Lenovo");
+							brandMap.put("dell", "Dell");
+							brandMap.put("asus", "Asus");
+						%> <%=HTMLUtility.getList("order_type", bean.getOrderType(), brandMap)%>
 					</td>
 					<td style="position: fixed;"><font color="red"><%=ServletUtility.getErrorMessage("order_type", request)%></font></td>
 				</tr>
-				
+
 				<tr>
-				<th></th>
-				<td colspan="3"><input type="submit" name="operation"
+					<th></th>
+					<%
+						if (bean != null && bean.getId() > 0) {
+					%>
+					<td align="left"><input type="submit" name="operation"
+						value="<%=PurchaseCtl.OP_UPDATE%>"> <input type="submit"
+						name="operation" value="<%=PurchaseCtl.OP_CANCEL%>"></td>
+
+					<%
+						} else {
+					%>
+
+					<td colspan="3"><input type="submit" name="operation"
 						value="<%=PurchaseCtl.OP_SAVE%>"> <input type="submit"
 						name="operation" value="<%=PurchaseCtl.OP_RESET%>"></td>
-				
-				
-				
+
+					<%
+						}
+					%>
 				</tr>
-				
-				
-				</table>
+
+
+			</table>
 
 
 
-</div>
-</form>
+		</div>
+	</form>
 
 </body>
 </html>

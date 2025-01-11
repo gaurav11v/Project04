@@ -145,7 +145,7 @@ public class UserModel {
 			if (bean.getFirstName() != null && bean.getFirstName().length() > 0) {
 				sql.append(" and first_name like '" + bean.getFirstName() + "'");
 			}
-			if (bean.getRoleId()>0) {
+			if (bean.getRoleId() > 0) {
 				sql.append(" and role_id like " + bean.getRoleId());
 			}
 
@@ -293,6 +293,7 @@ public class UserModel {
 		return bean;
 
 	}
+
 	public List list() throws Exception {
 		return search(null, 0, 0);
 	}

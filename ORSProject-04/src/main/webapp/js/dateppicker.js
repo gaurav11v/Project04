@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$("#udate").dateppicker({
+	$("#idate").datepicker({
 		dateFormat : 'dd-mm-yy',
 		changeMonth : true,
 		changeYear : true,

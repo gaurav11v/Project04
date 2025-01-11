@@ -52,6 +52,10 @@ public class PurchaseModel {
 
 	}
 
+	/**
+	 * @param bean
+	 * @throws Exception
+	 */
 	public void update(PurchaseBean bean) throws Exception {
 
 		int pk = nextPk();
@@ -60,7 +64,6 @@ public class PurchaseModel {
 		PreparedStatement pstmt = conn.prepareStatement(
 				"update st_purchase set quantity = ?, price = ?, purchase_date = ?, order_type = ?, created_by = ?, modified_by = ?, created_datetime = ?, modified_datetime = ? where id = ?");
 
-		
 		pstmt.setInt(1, bean.getQuantity());
 		pstmt.setDouble(2, bean.getPrice());
 		pstmt.setDate(3, new Date(bean.getPurchaseDate().getTime()));
@@ -69,7 +72,7 @@ public class PurchaseModel {
 		pstmt.setString(6, bean.getModifiedBy());
 		pstmt.setTimestamp(7, bean.getCreatedDateTime());
 		pstmt.setTimestamp(8, bean.getModifiedDateTime());
-		pstmt.setInt(9, pk);
+		pstmt.setLong(9, bean.getId());
 
 		int i = pstmt.executeUpdate();
 
@@ -78,6 +81,10 @@ public class PurchaseModel {
 		System.out.println("Data updated Successfully = " + i);
 	}
 
+	/**
+	 * @param id
+	 * @throws Exception method used to delete data
+	 */
 	public void delete(long id) throws Exception {
 
 		Connection conn = JDBCDataSource.getConnection();
@@ -106,8 +113,11 @@ public class PurchaseModel {
 		StringBuffer sql = new StringBuffer("select * from st_purchase where 1=1");
 
 		if (bean != null) {
+			if (bean.getOrderType() != null && bean.getOrderType().length() > 0) {
+				sql.append(" and order_type like '" + bean.getOrderType() + "'");
 
 			}
+		}
 		if (pageSize > 0) {
 			pageNo = (pageNo - 1) * pageSize;
 			sql.append(" limit " + pageNo + "," + pageSize);
@@ -134,7 +144,7 @@ public class PurchaseModel {
 			bean.setModifiedBy(rs.getString(7));
 			bean.setCreatedDateTime(rs.getTimestamp(8));
 			bean.setModifiedDateTime(rs.getTimestamp(9));
-			
+
 			list.add(bean);
 		}
 		JDBCDataSource.closeConnection(conn);
@@ -172,5 +182,4 @@ public class PurchaseModel {
 		return bean;
 	}
 
-	
 }
