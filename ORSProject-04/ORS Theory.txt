@@ -1,0 +1,388 @@
+ORS :) ORS is online web application that manage student and
+       marksheet records .
+
+***********************
+
+Which Architecture is followed by ORS ?
+
+MVC :)  MVC is framework methodology . It  separates code    
+        implementation of an application into three component 
+        Model , View , Controller .
+
+************************
+
+ Model :- Model contain business logic , data access logic ,
+          integration logic to perform business operation and
+          manipulate database .
+
+ View :- View component is responsible to render the graphic 
+         user interface .
+
+ Controller :- Controller contain navigation logic and are
+               responsible to perform business operation submitted
+               by view with the help of model .
+
+ **********************
+
+                        Types of LOGICsss :)
+
+Presentation logic :- This is the set of control statement that
+                      decide look of user interface .(JSP)
+
+Control logic :- This is the set of control statement that 
+                 decide Navigation of user interface.
+
+Business logic:- This is set of control statement that perform
+                 business operation.(Change password , Forget Password)
+
+Data Acess logic :- This is set of control statement that make 
+                    changes in database with the help of JDBC.(JDBC,SQL)
+
+Integration logic :- This is set of control statement that 
+                     integrate application with another application
+                     or server .(EMAIL SEND)
+
+************************************
+
+Design pattern :) 
+
+           Standard problem has standard solution .
+
+Singletone design pattern :- The class that has one instance in
+                       their lifetime is called singletone
+                     design pattern .
+
+Builder design pattern :- Create complex object using simple object 
+                           using step by step approach .
+
+Factory design pattern :- The class that has ability to create
+                         object of another class is called factory 
+                         class that follow factory design pattern.
+
+Front controller design pattern :- Main controller perform session
+                                checking and loging operation 
+                                before calling any application .
+                               Prevent any user to access an application
+                               without login . 
+
+*************************************
+
+Which class we make singletone class ? And how to make ?
+
+ JDBC datasource class 
+
+There are four steps to make single tone class :
+
+1. Make a class  Final so that child can not be created for single
+   class.
+
+2. Make a default Constructor Private so that no one other class
+   can instantiate single class .
+
+3. Decleare a Static Variable of self type in single class
+   static variable have only one copy in their lifetime .
+
+4. Make a get Instance() Static method in singletone class
+   that will return instance of same single class .
+
+***********************
+
+Acid Properties :- 
+
+  Automicity means all or nothing .
+  Consistancy means it make sure that data is in consistant state .
+  Isolation means Transaction are independent .
+  Duribility means commited data never lost .
+
+***********************
+
+WebServer name :- 
+
+1. Apache Tomcat
+2. Resine 
+3. Klone
+4. Oracle web tier
+5. jigsaw
+
+Application Server name :- 
+
+1. Jboss
+2. Websphere
+3. WebLogic
+4. Jetty
+5. GlassFish
+
+
+**********************
+DCP :-
+       It provide connection reusability & limit of maximum connection .
+
+       Add c3p0(0.9.5) dependencie 
+       JDBC Datasource class ko singletone bnai ComboPoolDataSource 
+       ka object banaya ( cpds ) 
+       cpds = null kiya 
+       cpds me sare parameter ko set kiya 
+       And connection provide kiya (  return getInstance().cpds.getConnection(); )
+
+System.properties pr parameter liye hai :-
+
+ url = jdbc:mysql://localhost:3306/project4
+ driver = com.mysql.cj.JDBC.Driver
+ username = root
+ password = root
+ Database = JDBC
+ Service = javaBean 
+ acquireIncrement = 10
+ initialpoolsize = 10
+ maxpoolsize = 100
+ minpoolsize = 10 
+ timeout = 10
+
+ 
+*************************
+
+Tool :- Eclips mars
+        MySql 
+        ER win
+        Agro UML  
+
+Dependencies :- Servlet (3.1.0)
+                MySql (8.0.29)
+              *  Log4j (1.2.17)
+              *  c3p0 (0.9.5)
+              * Java Mail (1.4.7)
+                
+Technologies :- JDK  ( 11 )
+                JSP( 3.2 ) Servlet ( 4.2 )
+                JDBC ( 4.2 )
+                MySql ( 8.0.29 )
+                Java Mail API ( 1.4.7 )
+                log4j ( 1.2.17 )
+
+---------------------------------------------------------------------------------
+***************************
+
+                               #  LOG4J :)
+
+* Log4j stand for logging message for java . It is an open source framework to log
+ message of your  program final destination like Console , File , Network ,Database. 
+
+* How to config Log4j ? 
+
+Answer : Add dependency = Log4j( 1.2.17 )
+         Make Log4j properties file 
+         Make Object of Logger in all Ctl & Model 
+   * Logger log = Logger.getLogger(UserCtl.class)
+
+1. *Component ofLog4j :-
+
+         Logger :  Responsible for capturing logging information .
+         Layout :  Responsible for formatting logging information in  different style .
+       Appender :  Responsible for publishing logging information to various preferred 
+                   destination . 
+
+2. Environment Of LOG4J :- 
+                        Development(Debug level)
+                        Quality Assurance(info level , Error level)
+                        Production Environment(warn level)
+3. LOG4J Appender :-
+                        ConsoleAppender
+                        FileAppender
+                        RollingfileAppender
+                        DailyRollingfileAppender
+                        EternalRollingfileAppender
+                        JDBCAppender
+                        SMTPAppender
+                        SocketAppender
+                        TelnetAppender
+                        NullAppender
+
+4. Layout of Log4j :-
+                      DateLayout
+                      HTMLLayout
+                      XMLLayout
+                      SimpleLayout
+                      PatternLayout
+( Log4j.appender.stdout.layout = org.appache.log4j.patternLayout )
+
+5. *Level of Log4j :-
+                    DebugLevel
+                    InfoLevel
+                    WarnLevel
+                    ErrorLevel
+                    FatalLevel 
+
+How to enable Log4j ?
+
+Ans : Log4j.rootLogger = Debug , file , Stdout (Console msg)
+
+Debug : Use to print message .
+File : (particular file me write krta hai ).
+Stdout : To print message on console .
+
+How to print message on console ?
+
+Ans : Log4j.appender.stdout.Target = System.out
+
+*How many Appender are use in Log4j ?
+
+Ans : 2 Appender are used === RollingfileAppender , ConsoleAppender
+
+Log4j.appender.file = org.appache.log4j.RollindfileAppender
+Log4j.appender.stdout = org.appache.log4j.ConsoleAppender
+
+*Which Layout is followed by Log4j?
+
+Ans :Log4j.appender.file.Layout = org.appache.log4j.patternLayout 
+Ans :Log4j.appender.stdout.Layout = org.appache.log4j.patternLayout 
+
+How to off Debug message ?
+
+Ans : Replace Debug by Off
+
+***************************
+===================================================================================================
+
+*Java Doc :- Java doc is documentation which help other developer 
+            to understand the project . 
+
+How to apply Javadoc ?
+
+Ans : Alt + Shift + j 
+      Project menu Generate Javadoc 
+      Config me javadoc.exe path
+      Select Destination 
+      Visibility Private (we can access private attribute of class)
+    
+How to mapping of JavaDoc ?
+ 
+Ans: /doc/index.html 
+
+* Why we did mapping ?
+
+It provide LooseCoupling ( By which we access any ctl or view easily)
+
+What is filter ?
+
+Ans : Filter perform Pre-Processing and Post-Processing operation
+      on request and response of Client .
+
+What is Session ?
+
+Ans : Session is conversation b/w Browser web client & web server .
+        Session is implicit object .
+
+*How to destroye session ?
+
+Ans : 1. session.invalidate ();(Minutes)
+      2. <session config>(Minutes)
+          <session timeout>20</session timeout>
+         </session config>
+      3. session.setMaxInactiveInterval();(Second)
+
+*How to Tracked session ?
+
+Ans : 1. Cookies (set of key value pair of string)
+     2. HiddenForm filled (<input type="hidden" name="jsessionId" 
+                           value<%=session.getId()  %>>)
+    3. URL Rewritting (response.encodeURL(url))
+
+What is Servlet ?
+
+Ans : Servlet share special type of java classes that produce dynamic
+      web contents to develop a  web application .
+
+What is JSP ?
+
+Ans : JSP Stand for Java Server Pages . This is the special form of
+       servlet to develope web page . 
+
+What is Web application ?
+
+Ans: The application that is access by a web browser (chrome ,FireFox ,IE ) using
+     HTTP protocol is called a web application . 
+
+What is HTTP protocol ?
+
+Ans: Hyper text Transfer Protocol , which communicate b/w web client & server .
+     It is a way by which request is submitted . 
+
+What is Container ?
+
+Ans : Container is responsible to COmpile , Execute & manage Lifecycle
+      of server resource .
+
+What is DCP ?
+
+Ans : DCP provide connection reusability and limit of maximum 
+      connection .
+
+*What is Transition Handling ?
+
+Ans : Transition is an atomic unit to be commited or rollback in a 
+      single attempt . 
+
+*1. conn.setAutocommit(false);
+// True kyu nhi dete === kyuki vo null value ko save kr leta hai 
+database me automatically data ko save nhi krnva na chahte hai pahle vo jake check kare
+OR ==== kyu ki jb bhi koi exception aaye to vo data base me ek bhi record save na kre 
+
+*2. conn.commit();
+ forcefully data ko save  krta hai .
+
+*3. conn.rollback();
+unwanted data ko rollback me aajayega .
+ 
+ DML - it is used to perform CRUD operation.(Add ,Update,delete)
+ DDL :- it is used to perform create table, alter table, drop table.
+ DCL :- it is used to rollback and commit.
+
+JAVA = Just Another Virtual Asclator
+JSP = Java Server Page 
+API = Apllication Programming Interface
+DDL = Data Defination Language(Perform create table , alter table ,drop table )
+DML = Data Manupulation laguage(Perform Crud operation )
+DCL = Data Control Language(used to rollback and commit)
+
+PreparedStatement :-
+               ( The PreparedStatement interface extends the Statement interface )
+               
+Difference b/w PreparedStatement  & Statement ?
+
+PreparedStatement__ sends query to database at the time of instantiation and holds
+compiled query . Whereas__ 
+Statement__ does not holds compiled query so queries executed by statement are 
+compiled and executed on every database call .
+ 
+Difference b/w DoGet & DoPost ?
+
+DoGet :- 
+          Perform view logic .
+          It does not carry data 
+          Form submitted data is encoded in URL & appended a query string . 
+          Parameter are save in browser history because they are part of URL .
+          Contain only character .
+          Can be cached .
+          can be book marked .
+
+DoPost:-
+  
+          Perform Submit logic .
+          It carry data .
+          Form submitted data is not a part of URL it is sent as message body of Http request .
+          Paramter are not saved in browser history . 
+          May contain binary data .
+          cannot be cached .
+          cannot be book marked .
+
+Comparable : It has default nature of sorting order & it has compareTo() .
+Compartor : It is customized & it has compare() .
+
+Debugging : It is a process by which developer check the flow programm
+
+
+Unchecked Exception : are optional to handle RuntimeException and Error classes
+                      are unchecked exception . 
+
+Chacked Exception : are Madatory to handle Keyword throw is mandatory to propagate
+                    checked exception .
